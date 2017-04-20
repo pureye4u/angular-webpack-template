@@ -1,0 +1,72 @@
+{
+  "name": "angular-webpack-template",
+  "version": "0.0.0",
+  "author": "pureye4u",
+  "description": "Angular with Webpack start template",
+  "license": "MIT",
+  "main": "src/main.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pureye4u/angular-webpack-template.git"
+  },
+  "engines": {
+    "node": ">=7.0.0",
+    "npm": ">=4.0.0"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --progress --port 8080",
+    "prebuild": "npm run clean-build",
+    "build:dev": "webpack --config config/webpack.dev.js --colors --progress --display-error-details --display-cached --profile",
+    "build:prod": "webpack --config config/webpack.prod.js --colors --progress --display-error-details --display-cached --profile",
+    "build:prod:aot": "npm run clean-awcache && npm run clean-aot && webpack --config config/webpack.prod.js --colors --progress --display-error-details --display-cached --profile",
+    "clean": "npm run clean-build && npm run clean-coverage && npm run clean-aot && npm run clean-awcache && npm run clean-dll",
+    "clean-build": "rimraf dist",
+    "clean-coverage": "rimraf coverage",
+    "clean-dll": "rimraf dll",
+    "clean-aot": "rimraf aot",
+    "clean-awcache": "rimraf .awcache",
+    "tslint": "tslint",
+    "lint": "npm run tslint \"src/**/*.ts\"",
+    "pretest": "npm run clean-coverage",
+    "test": "karma start --single-run",
+    "server:prod": "http-server dist -c-1 --cors",
+    "server:prod:ci": "http-server dist -p 3000 -c-1 --cors",
+    "pree2e": "npm run build:prod:aot",
+    "e2e": "npm-run-all -p -r server:prod:ci protractor:delay",
+    "protractor": "protractor",
+    "protractor:delay": "sleep 3 && npm run protractor",
+    "protractor:live": "protractor --elementExplorer",
+    "webdriver:update": "webdriver-manager update",
+    "webdriver-manager": "webdriver-manager",
+    "webdriver:start": "npm run webdriver-manager start",
+    "docs": "typedoc --out docs src",
+    "analyze:bundle": "webpack-bundle-analyzer dist/webpack-bundle-analyzer-report.json dist/",
+    "coveralls": "coveralls < coverage/lcov.info",
+    "codeclimate": "codeclimate-test-reporter < coverage/lcov.info"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/common": "^4.0.2",
+    "@angular/compiler": "^4.0.2",
+    "@angular/core": "^4.0.2",
+    "@angular/forms": "^4.0.2",
+    "@angular/http": "^4.0.2",
+    "@angular/platform-browser": "^4.0.2",
+    "@angular/platform-browser-dynamic": "^4.0.2",
+    "@angular/router": "^4.0.2",
+    "core-js": "^2.4.1",
+    "rxjs": "^5.3.0",
+    "zone.js": "^0.8.5"
+  },
+  "devDependencies": {
+    "@angular/compiler-cli": "^4.0.2",
+    "browser-sync": "^2.18.8",
+    "browser-sync-webpack-plugin": "^1.1.4",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "typescript": "^2.2.2",
+    "webpack": "^2.4.1",
+    "webpack-dev-server": "^2.4.2",
+    "webpack-dll-bundles-plugin": "^1.0.0-beta.5",
+    "webpack-merge": "^4.1.0"
+  }
+}
