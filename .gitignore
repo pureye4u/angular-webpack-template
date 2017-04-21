@@ -4,6 +4,9 @@
 /dist
 /tmp
 /out-tsc
+/aot
+/dll
+/docs
 
 # dependencies
 /node_modules
@@ -40,3 +43,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+.awcache
+.env
+.idea

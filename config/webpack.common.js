@@ -40,12 +40,9 @@ const BundleAnalyzerPlugin         = require('webpack-bundle-analyzer').BundleAn
 const HtmlElementsPlugin           = require('./html-elements-plugin');
 
 const helpers                      = require('./helpers');
-const TITLE                        = 'My MEAN Website';
-const TITLE_ADMIN                  = 'Admin My MEAN Website';
+const TITLE                        = '29CM Admin';
 const TEMPLATE_PATH                = './src/index.ejs';
-const TEMPLATE_ADMIN_PATH          = './src/admin.ejs';
 const TEMPLATE_HTML                = 'index.html';
-const TEMPLATE_ADMIN_HTML          = 'admin.html';
 
 const AOT                          = helpers.hasNpmFlag('aot');
 const TS_CONFIG                    = AOT ? 'tsconfig-aot.json' : 'tsconfig.json';
@@ -54,7 +51,6 @@ module.exports = {
   entry: {
     polyfills: './src/polyfills.ts',
     app: AOT ? './src/main.aot.ts' : './src/main.ts',
-    admin: AOT ? './src/admin.aot.ts' : './src/admin.ts',
   },
   resolve: {
     extensions: ['.ts', '.js', '.json'],
@@ -143,7 +139,7 @@ module.exports = {
     }),
     new CommonsChunkPlugin({
       name: 'vendor',
-      chunks: ['app', 'admin'],
+      chunks: ['app'],
       minChunks: module => /node_modules\//.test(module.resource) // enables tree-shaking
     }),
     new CommonsChunkPlugin({
@@ -156,25 +152,6 @@ module.exports = {
       chunks: ['polyfills', 'vendor', 'app'],
       template: TEMPLATE_PATH,
       filename: TEMPLATE_HTML
-    }),
-    new HtmlWebpackPlugin({
-      title: TITLE_ADMIN,
-      inject: true,
-      chunksSortMode: function (chunk1, chunk2) {
-        let orders = ['polyfills', 'vendor', 'admin'];
-        let order1 = orders.indexOf(chunk1.names[0]);
-        let order2 = orders.indexOf(chunk2.names[0]);
-        if (order1 > order2) {
-          return 1;
-        } else if (order1 < order2) {
-          return -1;
-        } else {
-          return 0;
-        }
-      },
-      chunks: ['polyfills', 'vendor', 'admin'],
-      template: TEMPLATE_ADMIN_PATH,
-      filename: TEMPLATE_ADMIN_HTML
     }),
     new ScriptExtHtmlWebpackPlugin({
       defaultAttribute: 'defer'
