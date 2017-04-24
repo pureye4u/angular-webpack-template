@@ -1,5 +1,3 @@
-// taken from https://github.com/AngularClass/angular2-webpack-starter/blob/master/src/app/environment.ts
-
 // Angular 2
 import {
     enableDebugTools,
@@ -35,13 +33,45 @@ if ('production' === webpack.ENV) {
         // custom providers in production
     ];
 
+} else if ('staging' === webpack.ENV) {
+    enableProdMode();
+
+    // Production
+    _decorateModuleRef = (modRef: any) => {
+        disableDebugTools();
+
+        return modRef;
+    };
+
+    PROVIDERS = [
+        ...PROVIDERS,
+        // custom providers in production
+    ];
+
+} else if ('development' === webpack.ENV) {
+    _decorateModuleRef = (modRef: any) => {
+        const appRef = modRef.injector.get(ApplicationRef);
+        const cmpRef = appRef.components[0];
+
+        const _ng = (<any> window).ng;
+        enableDebugTools(cmpRef);
+        (<any> window).ng.probe = _ng.probe;
+        (<any> window).ng.coreTokens = _ng.coreTokens;
+        return modRef;
+    };
+
+    // Development
+    PROVIDERS = [
+        ...PROVIDERS,
+        // custom providers in development
+    ];
+
 } else {
 
     _decorateModuleRef = (modRef: any) => {
         const appRef = modRef.injector.get(ApplicationRef);
         const cmpRef = appRef.components[0];
 
-        // there is an open issue here https://github.com/AngularClass/angular2-webpack-starter/issues/1573
         const _ng = (<any> window).ng;
         enableDebugTools(cmpRef);
         (<any> window).ng.probe = _ng.probe;

@@ -12,7 +12,7 @@ const LoaderOptionsPlugin     = require('webpack/lib/LoaderOptionsPlugin');
 const commonConfig            = require('./webpack.common.js');
 const helpers                 = require('./helpers');
 
-const ENV = process.env.NODE_ENV = 'development';
+const ENV = process.env.NODE_ENV = 'staging';
 const METADATA = {env: ENV};
 
 module.exports = webpackMerge(commonConfig, {

@@ -1,27 +1,3 @@
-/*
- * MIT License
- *
- * Copyright (c) 2017 Stefano Cappa
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
 const webpack                      = require('webpack');
 const DefinePlugin                 = require('webpack/lib/DefinePlugin');
 const ProvidePlugin                = require('webpack/lib/ProvidePlugin');
@@ -118,11 +94,6 @@ module.exports = {
       {
         test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         use: 'file-loader'
-      },
-      // Bootstrap 4
-      {
-        test: /bootstrap\/dist\/js\/umd\//,
-        use: 'imports?jQuery=jquery'
       }
     ],
     noParse: [
@@ -202,29 +173,6 @@ module.exports = {
     new ngcWebpack.NgcWebpackPlugin({
       disabled: !AOT,
       tsConfig: helpers.root('tsconfig-aot.json')
-    }),
-    new ProvidePlugin({
-      jQuery: 'jquery',
-      jquery: 'jquery',
-      $: 'jquery',
-      'Tether': 'tether',
-      'window.Tether': 'tether',
-      //---------------------------------------------------
-      //------------- temporary workaround ----------------
-      // https://github.com/shakacode/bootstrap-loader/issues/172#issuecomment-247205500
-      //this requires exports-loader installed from npm
-      Tooltip: 'exports-loader?Tooltip!bootstrap/js/dist/tooltip',
-      Alert: 'exports-loader?Alert!bootstrap/js/dist/alert',
-      Button: 'exports-loader?Button!bootstrap/js/dist/button',
-      Carousel: 'exports-loader?Carousel!bootstrap/js/dist/carousel',
-      Collapse: 'exports-loader?Collapse!bootstrap/js/dist/collapse',
-      Dropdown: 'exports-loader?Dropdown!bootstrap/js/dist/dropdown',
-      Modal: 'exports-loader?Modal!bootstrap/js/dist/modal',
-      Popover: 'exports-loader?Popover!bootstrap/js/dist/popover',
-      Scrollspy: 'exports-loader?Scrollspy!bootstrap/js/dist/scrollspy',
-      Tab: 'exports-loader?Tab!bootstrap/js/dist/tab',
-      Util: 'exports-loader?Util!bootstrap/js/dist/util'
-      //---------------------------------------------------
     }),
     new LoaderOptionsPlugin({
       options: {

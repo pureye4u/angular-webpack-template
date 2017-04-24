@@ -5,9 +5,6 @@ import { HttpModule } from '@angular/http';
 import { RouterModule, PreloadAllModules } from '@angular/router';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
 import { IdlePreloadModule } from '@angularclass/idle-preload';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
-import 'bootstrap-loader';
 
 import { ROUTES } from './app.routing';
 
@@ -25,7 +22,6 @@ import { AppComponent } from './app.component';
         HttpModule,
         FormsModule,
         ReactiveFormsModule,
-        NgbModule.forRoot(),
         RouterModule.forRoot(ROUTES, { useHash: false, preloadingStrategy: PreloadAllModules }),
         SharedModule,
     ],
